@@ -3943,3 +3943,15 @@ def test_flag_value_on_option_with_zero_or_one_args(flag_type, args, expect_outp
     result = runner.invoke(cmd, args)
     assert result.exit_code == 0
     assert result.output == expect_output
+
+
+def test_multiple_option_metavar_ellipsis(runner):
+    """An option with multiple=True appends '...' to its default metavar."""
+    @click.command()
+    @click.option("--item", multiple=True)
+    def cli(item):
+        pass
+
+    result = runner.invoke(cli, ["--help"])
+    assert result.exit_code == 0
+    assert "--item TEXT..." in result.output

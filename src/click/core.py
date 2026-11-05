@@ -2626,7 +2626,7 @@ class Parameter(ABC):
         if metavar is None:
             metavar = self.type.name.upper()
 
-        if self.nargs != 1:
+        if (self.nargs != 1 or self.multiple) and not metavar.endswith("..."):
             metavar += "..."
 
         return metavar
